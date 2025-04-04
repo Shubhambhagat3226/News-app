@@ -3,6 +3,7 @@ package com.dct.News_Application.controller;
 import com.dct.News_Application.dto.RegisterDTO;
 import com.dct.News_Application.entity.MyUserDetails;
 import com.dct.News_Application.entity.Users;
+import com.dct.News_Application.service.JWTService;
 import com.dct.News_Application.service.UserService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -19,9 +20,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class RegisterController {
 
     private final UserService userService;
+    private final JWTService jwtService;
 
-    public RegisterController(UserService userService) {
+    public RegisterController(UserService userService, JWTService jwtService) {
         this.userService = userService;
+        this.jwtService = jwtService;
     }
 
     @GetMapping("/register")
@@ -50,14 +53,14 @@ public class RegisterController {
             }
 
             Users users = userService.registerUser(user);
+            String token = jwtService.generateToken(users.getEmailId()); // Generate JWT
 
-
-            // **Auto-login after registration**
+            // Auto-login
             UserDetails userDetails = new MyUserDetails(users);
             Authentication auth = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(auth);
 
-            redirectAttributes.addFlashAttribute("success", "Registration successful! Please log in.");
+            redirectAttributes.addFlashAttribute("success", "Registration successful! Your token: " + token);
             return "redirect:/home";
         } catch (Exception e) {
             System.out.println("Error");
