@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>News Details</title>
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+<body>
+<div class="container">
+    <h2 th:text="${news.title}"></h2>
+    <img th:if="${news.imageUrl}" th:src="${news.imageUrl}" alt="News Image" class="news-image">
+    <h4 th:text="${news.description}"></h4>
+    <p th:utext="${news.content}">content</p>
+    <a th:href="${news.url}" target="_blank">Read Full Article</a>
+    <br><br>
+    <a th:href="@{/home}">Back to Search</a>
+</div>
+</body>
+</html>

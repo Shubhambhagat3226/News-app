@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>News Search</title>
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+<body>
+<div class="container">
+    <h2>Search News</h2>
+
+    <!-- Search Form -->
+        <form th:action="@{/search}" method="get">
+            <input type="text" name="query" placeholder="Enter keyword..." required list="search-history" autocomplete="off">
+            <datalist id="search-history">
+                <option th:each="item : ${searchHistory}" th:value="${item}"></option>
+            </datalist>
+            <button type="submit">Search</button>
+        </form>
+
+
+
+    <!-- Search Results -->
+    <div class="list-group" th:if="${newsList}">
+        <h3>Results:</h3>
+        <a th:each="news : ${newsList}"
+           th:href="@{/news/{id}(id=${news.id})}"
+           class="list-group-item" target="_self">
+            <img th:if="${news.imageUrl}" th:src="${news.imageUrl}" alt="News Image" class="news-image">
+            <h4 th:text="${news.title}"></h4>
+            <p th:text="${news.description}"></p>
+            <p th:text="${news.content}"></p>
+        </a>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    const searchInput = document.querySelector("input[name='query']");
+    const historyDropdown = document.getElementById("searchHistoryDropdown");
+
+    searchInput.addEventListener("focus", function() {
+        if (historyDropdown.children.length > 0) {
+            historyDropdown.style.display = "block";
+        }
+    });
+
+    searchInput.addEventListener("blur", function() {
+        setTimeout(() => historyDropdown.style.display = "none", 200);
+    });
+});
+
+</script>
+</body>
+</html>

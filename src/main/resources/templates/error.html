@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Error</title>
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <style>
+        .error-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        h2 {
+            color: red;
+        }
+        a {
+            display: block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="error-container">
+    <h2>No news articles found!</h2>
+    <p>Try searching with different keywords.</p>
+    <a th:href="@{/home}">Go Back</a>
+</div>
+</body>
+</html>
