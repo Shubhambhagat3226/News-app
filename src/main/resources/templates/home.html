@@ -8,6 +8,8 @@
 <body>
 <div class="container">
     <h2>Search News</h2>
+<!--    <p th:if="${success}" th:text="${success}" style="color: green;"></p>-->
+<!--    <p th:if="${token}">Your JWT: <span th:text="${token}"></span> (Copy this for API requests)</p>-->
 
     <!-- Search Form -->
         <form th:action="@{/search}" method="get">
@@ -36,19 +38,27 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-    const searchInput = document.querySelector("input[name='query']");
-    const historyDropdown = document.getElementById("searchHistoryDropdown");
-
-    searchInput.addEventListener("focus", function() {
-        if (historyDropdown.children.length > 0) {
-            historyDropdown.style.display = "block";
+        const token = /*[[${token}]]*/ null;
+        if (token) {
+            localStorage.setItem("jwtToken", token);
+            console.log("Token stored:", token);
         }
     });
 
-    searchInput.addEventListener("blur", function() {
-        setTimeout(() => historyDropdown.style.display = "none", 200);
-    });
-});
+<!--    document.addEventListener("DOMContentLoaded", function() {-->
+<!--    const searchInput = document.querySelector("input[name='query']");-->
+<!--    const historyDropdown = document.getElementById("searchHistoryDropdown");-->
+
+<!--    searchInput.addEventListener("focus", function() {-->
+<!--        if (historyDropdown.children.length > 0) {-->
+<!--            historyDropdown.style.display = "block";-->
+<!--        }-->
+<!--    });-->
+
+<!--    searchInput.addEventListener("blur", function() {-->
+<!--        setTimeout(() => historyDropdown.style.display = "none", 200);-->
+<!--    });-->
+<!--});-->
 
 </script>
 </body>
